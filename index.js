@@ -1,9 +1,13 @@
 const express = require('express');
+const connectDb = require('./db');
 
 const app = express();
 app.use(express.json());
 const router = express.Router();
 const port = 3333;
+
+connectDb();
+
 const women = [
     {
         id: crypto.randomUUID(),
