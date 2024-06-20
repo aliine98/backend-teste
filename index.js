@@ -1,5 +1,6 @@
 const express = require('express');
 const connectDb = require('./db');
+const Woman = require('./WomanModel');
 
 const app = express();
 app.use(express.json());
@@ -8,27 +9,13 @@ const port = 3333;
 
 connectDb();
 
-const women = [
-    {
-        id: crypto.randomUUID(),
-        name: 'Aline',
-        image: 'https://picsum.photos/200',
-        desc: 'Desenvolvedora web',
-    },
-    {
-        id: crypto.randomUUID(),
-        name: 'Camila',
-        image: 'https://picsum.photos/200',
-        desc: 'Desenvolvedora web',
-    },
-];
-
 function showPort() {
     console.log(`Listening on port ${port}`);
 }
 
 //GET
-function showWomen(req, res) {
+async function showWomen(req, res) {
+    const women = await Woman.find();
     res.json(women);
 }
 
