@@ -41,11 +41,8 @@ async function addWoman(req, res) {
 //PATCH
 async function updateWoman(req, res) {
     try {
-        const womanToUpdate = Woman.findById(req.params.id);
+        const womanToUpdate = await Woman.findById(req.params.id);
 
-        if (!womanToUpdate) {
-            return res.status(404).json({ message: 'Mulher não encontrada' });
-        }
         if (req.body.name) {
             womanToUpdate.name = req.body.name;
         }
