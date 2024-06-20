@@ -15,53 +15,62 @@ function showPort() {
 
 //GET
 async function showWomen(req, res) {
-    const women = await Woman.find();
-    res.json(women);
+    try {
+        const women = await Woman.find();
+        res.json(women);
+    } catch (e) {
+        console.log(e);
+    }
 }
 
 //POST
-function addWoman(req, res) {
-    const newWoman = {
-        id: crypto.randomUUID(),
+async function addWoman(req, res) {
+    const newWoman = new Woman({
         name: req.body.name,
         image: req.body.image,
         desc: req.body.desc,
-    };
-    women.push(newWoman);
-    res.json(women);
+    });
+    try {
+        const addedWoman = await newWoman.save();
+        res.status(201).json(addedWoman);
+    } catch (e) {
+        console.log(e);
+    }
 }
 
 //PATCH
-function updateWoman(req, res) {
-    const womanToUpdate = women.find(woman => woman.id === req.params.id);
+async function updateWoman(req, res) {
+    try {
+        const womanToUpdate = Woman.findById(req.params.id);
 
-    if (!womanToUpdate) {
-        return res.status(404).json({ message: 'Mulher não encontrada' });
+        if (!womanToUpdate) {
+            return res.status(404).json({ message: 'Mulher não encontrada' });
+        }
+        if (req.body.name) {
+            womanToUpdate.name = req.body.name;
+        }
+        if (req.body.image) {
+            womanToUpdate.image = req.body.image;
+        }
+        if (req.body.desc) {
+            womanToUpdate.desc = req.body.desc;
+        }
+
+        const updatedWoman = await womanToUpdate.save();
+        res.json(updatedWoman);
+    } catch (e) {
+        console.log(e);
     }
-    if (req.body.name) {
-        womanToUpdate.name = req.body.name;
-    }
-    if (req.body.image) {
-        womanToUpdate.image = req.body.image;
-    }
-    if (req.body.desc) {
-        womanToUpdate.desc = req.body.desc;
-    }
-    res.json(women);
 }
 
 //DELETE
-function deleteWoman(req, res) {
-    // const womanToDelete = women.find((woman) => woman.id === req.params.id);
-    // if (!womanToDelete) {
-    //     return res.status(404).json({ message: 'Mulher não encontrada' });
-    // }
-    // const index = women.indexOf(womanToDelete);
-    // women.splice(index, 1);
-    // res.json(women);
-
-    const newWomenList = women.filter(woman => woman.id !== req.params.id);
-    res.json(newWomenList);
+async function deleteWoman(req, res) {
+    try {
+        await Woman.findByIdAndDelete(req.params.id);
+        res.json({ message: 'Mulher deletada com sucesso' });
+    } catch (e) {
+        console.log(e);
+    }
 }
 
 app.listen(port, showPort);
