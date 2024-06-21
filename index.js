@@ -3,13 +3,12 @@ const connectDb = require('./db');
 const Woman = require('./WomanModel');
 const cors = require('cors');
 
+connectDb();
 const app = express();
 app.use(express.json());
 app.use(cors());
 const router = express.Router();
 const port = 3333;
-
-connectDb();
 
 function showPort() {
     console.log(`Listening on port ${port}`);
