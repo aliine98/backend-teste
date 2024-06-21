@@ -1,13 +1,13 @@
 const express = require('express');
-const connectDb = require('./db');
-const Woman = require('./WomanModel');
+const router = express.Router();
 const cors = require('cors');
-
+const connectDb = require('./db');
 connectDb();
+const Woman = require('./WomanModel');
+
 const app = express();
 app.use(express.json());
 app.use(cors());
-const router = express.Router();
 const port = 3333;
 
 function showPort() {
@@ -71,8 +71,8 @@ async function deleteWoman(req, res) {
     }
 }
 
-app.listen(port, showPort);
 app.use(router.get('/mulheres', showWomen));
 app.use(router.post('/nova-mulher', addWoman));
 app.use(router.patch('/mulheres/:id', updateWoman));
 app.use(router.delete('/mulheres/:id', deleteWoman));
+app.listen(port, showPort);
