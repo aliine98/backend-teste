@@ -127,7 +127,7 @@ Rode o servidor
 
 ## 📝 Licença
 
-![License](https://img.shields.io/github/license/aliine98/backend-teste?&logo=m&style=for-the-badge)
+![License](https://img.shields.io/github/license/aliine98/backend-teste?&style=for-the-badge)
 
 Feito com ❤️ por <a href="https://github.com/aliine98">Aline Bevilacqua</a>!
 
